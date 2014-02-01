@@ -20,7 +20,7 @@ namespace TaskEx.Configuration
 
         private TaskSpecificationSection GetSection()
         {
-            var section = ConfigurationManager.GetSection("taskSpecificationSection");
+            var section = ConfigurationManager.GetSection("taskConfiguration");
             if(section == null)
                 throw new InvalidOperationException("Section not specified");
             return (TaskSpecificationSection) section;
@@ -31,15 +31,26 @@ namespace TaskEx.Configuration
             return _section.Specifications.Cast<SpecificationConfiguration>().FirstOrDefault(spec => spec.Name == name);
         }
 
-        public TaskConfiguration GetTask(string specificationName, string name)
+        public IEnumerable<SpecificationConfiguration> GetSpecifications()
         {
-            var spec = GetSpecification(specificationName);
-            return spec.Tasks.Cast<TaskConfiguration>().FirstOrDefault(i => i.Name == name);
+            return _section.Specifications.Cast<SpecificationConfiguration>();
         }
 
-        public Dictionary<string, object> GetTaskSettings(string specificationName, string name)
+        public TaskConfiguration GetTask(string specificationName, string qualifiedName)
         {
-            var task = GetTask(specificationName, name);
+            var spec = GetSpecification(specificationName);
+            return spec.Tasks.Cast<TaskConfiguration>().FirstOrDefault(i => PrepareQualifiedNameForComparison(i.TaskQualifiedName) == PrepareQualifiedNameForComparison(qualifiedName));
+        }
+
+        private string PrepareQualifiedNameForComparison(string qualifiedName)
+        {
+            var newStr = new string(qualifiedName.ToCharArray());
+            return newStr.Replace(" ", string.Empty).ToLowerInvariant();
+        }
+
+        public Dictionary<string, object> GetTaskSettings(string specificationName, string qualifiedName)
+        {
+            var task = GetTask(specificationName, qualifiedName);
             return GetSettings(task.Settings);
         }
 

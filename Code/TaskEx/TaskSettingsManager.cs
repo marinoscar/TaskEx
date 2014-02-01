@@ -17,7 +17,7 @@ namespace TaskEx
         private static SettingConfigurationCollection GetSettings(ITask task)
         {
             var configManager = new TaskConfigurationManager();
-            var taskConfig = configManager.GetTask(task.Specification.Name, task.Name);
+            var taskConfig = configManager.GetTask(task.Specification.Name, TaskQualifiedName.GetInvariantName(task));
             return taskConfig.Settings;
         }
     }

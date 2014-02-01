@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -40,16 +41,18 @@ namespace TaskEx.Configuration
             }
         }
 
-        public ITask GetTask()
+        public ITask GetTask(ISpecification specification)
         {
             if (string.IsNullOrWhiteSpace(TaskQualifiedName)) throw new ArgumentException("Invalid TaskQualifiedName value");
             var assemblyInfo = TaskQualifiedName.Split(",".ToCharArray());
-            var assemblyType = assemblyInfo[0];
+            var assemblyType = assemblyInfo[0].Trim();
             if (assemblyInfo.Length <= 1) throw new ArgumentException("Invalid TaskQualifiedName value");
-            var assemblyName = assemblyInfo[1];
-            var objectHandle = Activator.CreateInstance(assemblyName, assemblyType);
-            if (objectHandle == null) throw new ArgumentException("Invalid TaskQualifiedName value");
-            var task = (ITask)objectHandle.Unwrap();
+            var assemblyName = assemblyInfo[1].Trim();
+            var ass = AppDomain.CurrentDomain.Load(assemblyName);
+            var assType = ass.GetType(assemblyType);
+            var obj = Activator.CreateInstance(assType, new object[] { specification });
+            if (obj == null) throw new ArgumentException("Invalid TaskQualifiedName value");
+            var task = (ITask)obj;
             return task;
         }
     }

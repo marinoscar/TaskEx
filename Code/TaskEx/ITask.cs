@@ -9,7 +9,7 @@ namespace TaskEx
 {
     public interface ITask : IDisposable, ISettings, IDisabled
     {
-        TaskRunTime TaskRunTime { get; }
+        TaskRunTime TaskRunTime { get; set; }
         ISpecification Specification { get; }
         string Name { get; }
         void Execute();

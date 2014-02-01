@@ -9,7 +9,8 @@ namespace TaskEx.Model
     public class TaskRunTime
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string SpecifiactionName { get; set; }
+        public string TaskName { get; set; }
         public DateTime UtcLastRunAt { get; set; }
     }
 }

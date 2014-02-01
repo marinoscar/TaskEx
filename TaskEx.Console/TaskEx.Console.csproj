@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1E67952B-AB14-487A-B301-564FF635F641}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{5E6318A4-7BD6-4793-98C5-2F759A00D490}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TaskEx</RootNamespace>
-    <AssemblyName>TaskEx</AssemblyName>
+    <RootNamespace>TaskEx.Console</RootNamespace>
+    <AssemblyName>TaskEx.Console</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -33,7 +35,6 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,37 +42,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\ConfigurationBase.cs" />
-    <Compile Include="Configuration\ConfigurationCollectionBase.cs" />
-    <Compile Include="Configuration\DisabledConfiguration.cs" />
-    <Compile Include="Configuration\SettingConfiguration.cs" />
-    <Compile Include="Configuration\SettingConfigurationCollection.cs" />
-    <Compile Include="Configuration\SpecificationConfiguration.cs" />
-    <Compile Include="Configuration\SpecificationConfigurationCollection.cs" />
-    <Compile Include="Configuration\TaskConfiguration.cs" />
-    <Compile Include="Configuration\TaskConfigurationCollection.cs" />
-    <Compile Include="Configuration\TaskConfigurationManager.cs" />
-    <Compile Include="Configuration\TaskSpecificationSection.cs" />
-    <Compile Include="IDisabled.cs" />
-    <Compile Include="ISettings.cs" />
-    <Compile Include="ISpecification.cs" />
-    <Compile Include="ITask.cs" />
-    <Compile Include="ITaskRunTimeRepository.cs" />
-    <Compile Include="Model\TaskRunTime.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SettingsManager.cs" />
-    <Compile Include="SpecificationSettingsManager.cs" />
-    <Compile Include="TaskBase.cs" />
-    <Compile Include="TaskQualifiedName.cs" />
-    <Compile Include="TaskRunner.cs" />
-    <Compile Include="TaskRunTimeRepository.cs" />
-    <Compile Include="TaskSettingsManager.cs" />
-    <Compile Include="TaskSpecification.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\DataEx\DataEx\DataEx.csproj">
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\DataEx\DataEx\DataEx.csproj">
       <Project>{a20163b7-c57b-4780-af21-8cb688fc4288}</Project>
       <Name>DataEx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Code\TaskEx\TaskEx.csproj">
+      <Project>{1e67952b-ab14-487a-b301-564ff635f641}</Project>
+      <Name>TaskEx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TaskEx.Library\TaskEx.Library.csproj">
+      <Project>{5ede2f10-6d0f-4af0-9844-eb834394c828}</Project>
+      <Name>TaskEx.Library</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
